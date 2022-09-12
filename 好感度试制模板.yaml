@@ -1,0 +1,97 @@
+enable: true
+interval: 0
+items:
+    - enable: true
+      conditions:
+        - condType: textMatch
+          matchType: matchExact
+          value: 清除好感度
+      results:
+        - resultType: replyToSender
+          delay: 0
+          message:
+            - - '{%$m好感度=0;''您希望的对话，别删引号''%}'
+              - 1
+    - enable: true
+      conditions:
+        - condType: textMatch
+          matchType: matchExact
+          value: 查询好感度
+      results:
+        - resultType: replyToSender
+          delay: 0
+          message:
+            - - 目前骰子对{$t玩家}的好感度是{$m好感度}
+              - 1
+    - enable: true
+      conditions:
+        - condType: textMatch
+          matchType: matchExact
+          value: 好感度足够才会回复，可以改数值
+      results:
+        - resultType: replyToSender
+          delay: 1
+          message:
+            - - |-
+                {%
+                    $m好感度 > 65 ? '您希望的回复，',
+                    $m好感度 > 25? '您希望的回复',
+                    $m好感度 > 10 ? '您希望的回复',
+                    $m好感度 > 5 ? '您希望的回复',
+                    $m好感度>=0 ? '您希望的回复'
+                %}
+              - 1
+    - enable: true
+      conditions:
+        - condType: textMatch
+          matchType: matchExact
+          value: 作弊改好感，测试用的
+      results:
+        - resultType: replyToSender
+          delay: 0
+          message:
+            - - 好感度已经变为{%$m好感度=80%}
+              - 1
+    - enable: true
+      conditions:
+        - condType: textMatch
+          matchType: matchExact
+          value: 增加好感（一天一次，不用就把下一个条件删了）
+        - condType: exprTrue
+          value: $m00!=$tDate
+      results:
+        - resultType: replyToSender
+          delay: 0
+          message:
+            - - '{%$m00=$tDate;$m好感度=$m好感度+1;''你希望的回复''%}'
+              - 1
+    - enable: true
+      conditions:
+        - condType: textMatch
+          matchType: matchExact
+          value: 发过了上一条的回复（同样不需要一天一个可以删）
+        - condType: exprTrue
+          value: $m00==$tDate
+      results:
+        - resultType: replyToSender
+          delay: 0
+          message:
+            - - 你已经发过了
+              - 1
+    - enable: true
+      conditions:
+        - condType: textMatch
+          matchType: matchExact
+          value: "00"
+      results:
+        - resultType: replyToSender
+          delay: 0
+          message:
+            - - '{%$m00=0%}'
+              - 1
+name: ""
+author: []
+version: ""
+createTimestamp: 0
+updateTimestamp: 0
+desc: ""

@@ -1,0 +1,160 @@
+enable: true
+interval: 0
+items:
+    - enable: true
+      conditions:
+        - condType: exprTrue
+          value: $g11<0
+      results:
+        - resultType: replyToSender
+          delay: 1
+          message:
+            - - 任务失败
+              - 1
+        - resultType: replyToSender
+          delay: 0
+          message:
+            - - '{%$g1=0;''你希望的重置语句''%}'
+              - 1
+    - enable: true
+      conditions:
+        - condType: textMatch
+          matchType: matchExact
+          value: 停止任务
+      results:
+        - resultType: replyToSender
+          delay: 1
+          message:
+            - - 任务终止，目前为{%$g11=0%}
+              - 1
+    - enable: true
+      conditions:
+        - condType: textMatch
+          matchType: matchExact
+          value: 任务完成度查询
+      results:
+        - resultType: replyToSender
+          delay: 0
+          message:
+            - - 当前任务完成度为{$g11}
+              - 1
+    - enable: true
+      conditions:
+        - condType: textMatch
+          matchType: matchExact
+          value: 重置任务
+      results:
+        - resultType: replyToSender
+          delay: 0
+          message:
+            - - 任务已经重置，目前为：{%$g11=0%}。
+              - 1
+    - enable: true
+      conditions:
+        - condType: textMatch
+          matchType: matchExact
+          value: 任务倒退
+      results:
+        - resultType: replyToSender
+          delay: 0
+          message:
+            - - '{%$g1=$g11-0;''任务倒退描述''%}'
+              - 1
+    - enable: true
+      conditions:
+        - condType: textMatch
+          matchType: matchExact
+          value: 抽取任务道具
+        - condType: exprTrue
+          value: $m5!=$tDate
+      results:
+        - resultType: replyToSender
+          delay: 0
+          message:
+            - - '{%$g0=$g0+1;''得到了高级道具！''%}'
+              - 1
+            - - '{%$g2=$g2+1;''得到了中级道具！''%}'
+              - 1
+            - - '{%$g3=$g3+1;''得到了初级道具！''%}'
+              - 1
+            - - '{%$g2=$g2+1;''得到了中级道具！''%}'
+              - 1
+            - - '{%$g3=$g3+1;''得到了初级道具！''%}'
+              - 1
+            - - '{%$g3=$g3+1;''得到了初级道具！''%}'
+              - 1
+        - resultType: replyToSender
+          delay: 0
+          message:
+            - - '{%$m5=$tDate;''今日道具已抽取''%}'
+              - 1
+    - enable: true
+      conditions:
+        - condType: textMatch
+          matchType: matchExact
+          value: 抽取任务道具（重复）
+      results:
+        - resultType: replyToSender
+          delay: 0
+          message:
+            - - 今日道具已抽取！
+              - 1
+    - enable: true
+      conditions:
+        - condType: textMatch
+          matchType: matchExact
+          value: 删除道具
+      results:
+        - resultType: replyToSender
+          delay: 0
+          message:
+            - - |-
+                目前拥有
+                高级道具{$g0=0}
+                中级道具{$g2=0}
+                初级道具{$g3=0}
+              - 1
+    - enable: true
+      conditions:
+        - condType: textMatch
+          matchType: matchExact
+          value: 开启任务
+        - condType: exprTrue
+          value: $g4!=$tDate
+      results:
+        - resultType: replyToSender
+          delay: 0
+          message:
+            - - 开启任务！目前任务完成度为{%$g11=1%}！今日（{%$g4=$tDate%}）任务次数已用尽
+              - 1
+    - enable: true
+      conditions:
+        - condType: textMatch
+          matchType: matchExact
+          value: 开启任务（第二次）
+        - condType: exprTrue
+          value: $g4==$tDate
+      results:
+        - resultType: replyToSender
+          delay: 0
+          message:
+            - - 今日任务已开启，请不要重复接取
+              - 1
+    - enable: true
+      conditions:
+        - condType: textMatch
+          matchType: matchExact
+          value: 使用任务道具
+      results:
+        - resultType: replyToSender
+          delay: 0
+          message:
+            - - '{%$g11=$g11+($g0*5)+($g2*2)+($g3*1);''已经使用所有的修复道具！''%}'
+              - 1
+name: reply群任务链接修复试制.yaml
+author:
+    - 无名海豹
+version: ""
+createTimestamp: 1662728118
+updateTimestamp: 1662728118
+desc: ""
